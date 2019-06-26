@@ -12,39 +12,34 @@ class Register extends Component {
     };
   }
 
-  dummyRegister = () => {
-    alert(`username = ${this.state.username} \npassword = ${this.state.password}\nverifyPassword = ${this.state.verifyPassword}`);
-  }
-
   register = () => {
-    const loginUrl = ``;
-    const baseUrl = ``;
+    if (this.state.password !== this.state.verifyPassword) {
+      alert('Check youe password verification');
+      return;
+    }
+    const loginUrl = `users/signup.php`;
+    const baseUrl = `http://localhost/newFacebook/`;
     axios({
       url: loginUrl,
       baseURL: baseUrl,
       method: 'POST',
+      headers: { 'Access-Control-Allow-Origin': '*' },
       data: {
-        playground: this.state.playground,
-        email: this.state.email,
-        userName: this.state.userName,
-        //avatar: this.state.avatar,
-        role: this.state.role
+        username: this.state.username,
+        password: this.state.password
       }
     })
       .then(res => res.data)
-      .then(user => {
+      .then(data => {
+        console.log('data = ', data);
         this.props.changeStep('login');
 
       })
       .catch(e => {
         if (e.response !== undefined
           && e.response.data !== undefined
-          && e.response.data.message !== undefined
-          && e.response.status === 500) {
+          && e.response.data.message !== undefined) {
           alert(e.response.data.message);
-        } else {
-          alert(e);
-          console.log(e);
         }
       });
   }
@@ -66,7 +61,7 @@ class Register extends Component {
         </div>
         <br />
 
-        <button onClick={() => this.dummyRegister()}>Register</button>
+        <button onClick={() => this.register()}>Register</button>
       </div>
     );
   }

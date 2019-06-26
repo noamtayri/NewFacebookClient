@@ -24,7 +24,7 @@ class Comments extends Component {
                 {this.state.comments.map((comment, i) => (
                     <div key={i} className="comment">
                         <div className="bubble">
-                            <div className="commentAuthor" onClick={this.goToProfile} onClick={this.props.goToProfile}>
+                            <div className="commentAuthor" onClick={this.props.goToProfile}>
                                 {comment.username}
                             </div>
                             <div className="commentContent">

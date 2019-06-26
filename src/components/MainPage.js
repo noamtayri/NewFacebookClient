@@ -7,6 +7,7 @@ class MainPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: props.username,
             disableScreen: false,
             newPost: ''
         };
@@ -28,7 +29,7 @@ class MainPage extends Component {
         return (
             <div className="mainPage">
                 <div className="headerWrapper">
-                    <Header disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} />
+                    <Header username={this.state.username} disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} />
                 </div>
                 <div className="newPost">
                     <div className="newPostHeader" >Create New Post</div>

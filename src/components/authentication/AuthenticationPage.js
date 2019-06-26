@@ -28,7 +28,7 @@ class AuthenticationPage extends Component {
   render() {
     let toShow;
     if (this.state.step === 'login') {
-      toShow = <Login changeStep={this.changeStep} userLoggedIn={this.props.userLoggedIn} />
+      toShow = <Login changeStep={this.changeStep} loginUser={this.props.loginUser} />
     }
     else if (this.state.step === 'register') {
       toShow = <Register changeStep={this.changeStep} />

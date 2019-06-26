@@ -21,12 +21,16 @@ class Login extends Component {
     })
       .then(res => res.data)
       .then(data => {
-        console.log(data);
+        console.log(data.username);
         console.log('confirmed user');
-        // this.props.userLoggedIn(user);
+        this.props.loginUser(data.username);
       })
       .catch((e) => {
-        console.log('e = ', JSON.stringify(e));
+        if (e.response !== undefined
+          && e.response.data !== undefined
+          && e.response.data.message !== undefined) {
+          alert(e.response.data.message);
+        }
       });
   }
 
@@ -43,7 +47,7 @@ class Login extends Component {
           <br />
           <input type="text" placeholder="Enter Password" name="password" required onChange={event => this.setState({ password: event.target.value })} />
           <br />
-          <button onClick={() => this.login()}>Login</button>
+          <button onClick={this.login}>Login</button>
         </div>
       </div>
     );
