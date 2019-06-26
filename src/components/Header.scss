@@ -1,0 +1,44 @@
+.Header{
+    background-color: #4267B2;
+    height: 42px;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    z-index: 33;
+
+    .search{
+        height: 26px;
+        border-radius: 5px;
+        position: relative;
+        .input{
+            line-height: 19px;
+            width: 440px;
+            font-size: 16px;
+        }
+        .friendsList{
+            position: absolute;
+            top: 25px;
+        }
+    }
+
+    .navigate{
+        color: white;
+        :hover{
+            cursor: pointer;
+        }
+        a{
+            font-size: 15px;
+            margin: 10px;
+        }
+    }
+}
+
+.headerPlaceholder{
+    height: 42px;
+}
+
+
+
