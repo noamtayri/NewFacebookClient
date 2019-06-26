@@ -11,37 +11,22 @@ class Login extends Component {
     };
   }
 
-  dummyLogin = () => {
-    alert(`username = ${this.state.username} \npassword = ${this.state.password}`);
-  }
-
   login = () => {
-    const loginUrl = ``;
-    const baseUrl = ``;
+    const loginUrl = `users/login.php?username=${this.state.username}&password=${this.state.password}`;
+    const baseUrl = `http://172.20.10.2/newFacebook/`;
     axios({
       url: loginUrl,
       baseURL: baseUrl,
       method: 'GET',
     })
       .then(res => res.data)
-      .then(user => {
-        if (user.code === -1) {
-          console.log('confirmed user');
-          this.props.userLoggedIn(user);
-        } else {
-          console.log('waiting for confirm code');
-        }
+      .then(data => {
+        console.log(data);
+        console.log('confirmed user');
+        // this.props.userLoggedIn(user);
       })
-      .catch(e => {
-        if (e.response !== undefined
-          && e.response.data !== undefined
-          && e.response.data.message !== undefined
-          && e.response.status === 500) {
-          alert(e.response.data.message);
-        } else {
-          alert(e);
-          console.log(e);
-        }
+      .catch((e) => {
+        console.log('e = ', JSON.stringify(e));
       });
   }
 
@@ -58,7 +43,7 @@ class Login extends Component {
           <br />
           <input type="text" placeholder="Enter Password" name="password" required onChange={event => this.setState({ password: event.target.value })} />
           <br />
-          <button onClick={() => this.dummyLogin()}>Login</button>
+          <button onClick={() => this.login()}>Login</button>
         </div>
       </div>
     );

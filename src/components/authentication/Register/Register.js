@@ -33,7 +33,7 @@ class Register extends Component {
     })
       .then(res => res.data)
       .then(user => {
-        this.props.changeStep('code');
+        this.props.changeStep('login');
 
       })
       .catch(e => {

@@ -7,7 +7,7 @@ class Header extends Component {
         super(props);
         this.state = {
             search: '',
-            // friends: ['Ron', 'Noam']
+            // friends: ['Ron Ginat', 'Noam Tayri']
             friends: []
         };
     }

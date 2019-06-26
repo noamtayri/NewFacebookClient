@@ -59,7 +59,10 @@ class Post extends Component {
         return (
             <div className="post">
                 <div className="author" onClick={this.goToProfile}>
-                    blabla
+                    Noam Tayri
+                </div>
+                <div className="postDate">
+                    20/2/2018
                 </div>
                 <div className="content">
                     blabla blabla blabla blablablablablabla blabla blabla blabla blabla blabla blablablabla blabla blabla blabla blablablablablabla blabla blabla blabla blabla blabla blablablabla
