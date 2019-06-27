@@ -13,7 +13,7 @@ class Login extends Component {
 
   login = () => {
     const loginUrl = `users/login.php?username=${this.state.username}&password=${this.state.password}`;
-    const baseUrl = `http://172.20.10.2/newFacebook/`;
+    const baseUrl = `http://localhost/newFacebook/`;
     axios({
       url: loginUrl,
       baseURL: baseUrl,

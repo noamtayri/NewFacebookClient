@@ -8,16 +8,15 @@ class Header extends Component {
         super(props);
         this.state = {
             username: props.username,
-            searchOnFocus: false,
             search: '',
-            friends: []
+            friends: [],
         };
         this.getAllFriends();
     }
 
     getAllFriends = () => {
         const loginUrl = `users/search.php?username=`;
-        const baseUrl = `http://172.20.10.2/newFacebook/`;
+        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -37,10 +36,12 @@ class Header extends Component {
     }
 
     friendsToShow = () => {
-        if (this.state.search === '') {
+        if (this.state.search === '*') {
             const friendsToSend = [];
             this.state.friends.forEach(friend => {
-                friendsToSend.push(friend.username);
+                if (friend.username !== this.state.username) {
+                    friendsToSend.push(friend.username);
+                }
             });
             return friendsToSend;
         } else {
@@ -72,14 +73,12 @@ class Header extends Component {
                                 name="search"
                                 required
                                 onChange={event => this.setState({ search: event.target.value })}
-                                onFocus={() => this.setState({ searchOnFocus: true })}
-                                onBlur={() => this.setState({ searchOnFocus: false })}
                             />
                         </form>
-                        {this.state.searchOnFocus &&
+                        {this.state.search !== '' &&
                             <div className="friendsList">
                                 {this.friendsToShow().map((friend, i) => (
-                                    <Friend key={i} friend={friend} />
+                                    <Friend key={i} username={this.state.username} friend={friend} />
                                 ))}
                             </div>}
                     </div>
