@@ -47,9 +47,11 @@ class Header extends Component {
         } else {
             const friendsToSend = [];
             this.state.friends.forEach(friend => {
-                const subName = friend.username.substring(0, this.state.search.length);
-                if (subName === this.state.search) {
-                    friendsToSend.push(friend.username);
+                if (friend.username !== this.state.username) {
+                    const subName = friend.username.substring(0, this.state.search.length);
+                    if (subName === this.state.search) {
+                        friendsToSend.push(friend.username);
+                    }
                 }
             });
             return friendsToSend;
@@ -67,6 +69,7 @@ class Header extends Component {
                     <div className="search">
                         <form>
                             <input
+                                disabled={this.props.disableScreen}
                                 className="input"
                                 type="text"
                                 placeholder="Search"
