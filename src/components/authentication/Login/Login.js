@@ -21,8 +21,6 @@ class Login extends Component {
     })
       .then(res => res.data)
       .then(data => {
-        console.log(data.username);
-        console.log('confirmed user');
         this.props.loginUser(data.username);
       })
       .catch((e) => {

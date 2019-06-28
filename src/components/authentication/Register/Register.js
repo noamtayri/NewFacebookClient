@@ -23,7 +23,6 @@ class Register extends Component {
       url: loginUrl,
       baseURL: baseUrl,
       method: 'POST',
-      headers: { 'Access-Control-Allow-Origin': '*' },
       data: {
         username: this.state.username,
         password: this.state.password
@@ -31,7 +30,6 @@ class Register extends Component {
     })
       .then(res => res.data)
       .then(data => {
-        console.log('data = ', data);
         this.props.changeStep('login');
 
       })

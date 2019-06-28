@@ -63,8 +63,8 @@ class Header extends Component {
             [
                 <div key={'header'} className="Header">
                     <div className="navigate">
-                        <a onClick={() => alert('hi')}>Home</a>
-                        <a onClick={() => alert('hi')}>My Profile</a>
+                        <div className="navigateButton" onClick={() => alert('hi')}>Home</div>
+                        <div className="navigateButton" onClick={() => alert('hi')}>My Profile</div>
                     </div>
                     <div className="search">
                         <form>

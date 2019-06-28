@@ -26,10 +26,11 @@
 
     .navigate{
         color: white;
+        display: flex;
         :hover{
             cursor: pointer;
         }
-        a{
+        .navigateButton{
             font-size: 15px;
             margin: 10px;
         }

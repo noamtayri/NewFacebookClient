@@ -27,10 +27,39 @@ class MainPage extends Component {
         })
             .then(res => res.data)
             .then(data => {
-                console.log(data.records);
-                // this.setState({feed: data.records})
+                this.setState({ feed: data.records })
             })
             .catch((e) => {
+                if (e.response !== undefined
+                    && e.response.data !== undefined
+                    && e.response.data.message !== undefined) {
+                    alert(e.response.data.message);
+                }
+            });
+    }
+
+    postPost = () => {
+        if (this.state.newPost === '') {
+            alert('Your Post is Empty');
+            return;
+        }
+        const loginUrl = `posts/create.php`;
+        const baseUrl = `http://localhost/newFacebook/`;
+        axios({
+            url: loginUrl,
+            baseURL: baseUrl,
+            method: 'POST',
+            data: {
+                username: this.state.username,
+                private: !this.state.isNewPostPublic,
+                content: this.state.newPost
+            }
+        })
+            .then(res => res.data)
+            .then(data => {
+                this.forceUpdate();
+            })
+            .catch(e => {
                 if (e.response !== undefined
                     && e.response.data !== undefined
                     && e.response.data.message !== undefined) {
@@ -42,13 +71,6 @@ class MainPage extends Component {
     changeScreenAbility = () => {
         const disableScreen = this.state.disableScreen;
         this.setState({ disableScreen: !disableScreen });
-    }
-
-    postPost = () => {
-        if (this.state.disableScreen) {
-            return;
-        }
-        alert(`newPost = ${this.state.newPost}`);
     }
 
     changePublic = () => {
