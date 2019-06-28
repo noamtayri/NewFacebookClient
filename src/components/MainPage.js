@@ -12,9 +12,32 @@ class MainPage extends Component {
             disableScreen: false,
             newPost: '',
             isNewPostPublic: true,
-            feed: []
+            feed: [],
+            profileMode: false,
+            profile: []
         };
         this.getFeed();
+    }
+
+    getProfile = (profileToShow) => {
+        const loginUrl = `posts/profile.php?reqUser=${this.state.username}&resUser=${profileToShow}`;
+        const baseUrl = `http://localhost/newFacebook/`;
+        axios({
+            url: loginUrl,
+            baseURL: baseUrl,
+            method: 'GET',
+        })
+            .then(res => res.data)
+            .then(data => {
+                this.setState({ profileMode: true, profile: data.records })
+            })
+            .catch((e) => {
+                if (e.response !== undefined
+                    && e.response.data !== undefined
+                    && e.response.data.message !== undefined) {
+                    alert(e.response.data.message);
+                }
+            });
     }
 
     getFeed = () => {
@@ -27,7 +50,7 @@ class MainPage extends Component {
         })
             .then(res => res.data)
             .then(data => {
-                this.setState({ feed: data.records })
+                this.setState({ profileMode: false, feed: data.records })
             })
             .catch((e) => {
                 if (e.response !== undefined
@@ -57,7 +80,9 @@ class MainPage extends Component {
         })
             .then(res => res.data)
             .then(data => {
-                this.forceUpdate();
+                this.setState({ newPost: '' })
+                this.getFeed();
+
             })
             .catch(e => {
                 if (e.response !== undefined
@@ -79,25 +104,35 @@ class MainPage extends Component {
     }
 
     render() {
+        const postsToShow = this.state.profileMode ? this.state.profile : this.state.feed;
+
         return (
             <div className="mainPage">
                 <div className="headerWrapper">
-                    <Header username={this.state.username} disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} />
+                    <Header username={this.state.username} disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} getFeed={this.getFeed} getProfile={this.getProfile} />
                 </div>
-                <div className="newPost">
-                    <div className="newPostHeader" >Create New Post</div>
-                    <div className="newPostBody">
-                        <textarea className="newPostText" type="text" placeholder="What are you thinking about?" name="newPost" required onChange={event => this.setState({ newPost: event.target.value })} />
-                        <button className="newPostButton" onClick={this.postPost}>Post</button>
-                        <div className="newPostPermission">
-                            <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
+                {!this.state.profileMode &&
+                    <div className="newPost">
+                        <div className="newPostHeader" >Create New Post</div>
+                        <div className="newPostBody">
+                            <textarea className="newPostText" value={this.state.newPost} type="text" placeholder="What are you thinking about?" name="newPost" required onChange={event => this.setState({ newPost: event.target.value })} />
+                            <button className="newPostButton" onClick={this.postPost}>Post</button>
+                            <div className="newPostPermission">
+                                <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                {this.state.feed.map((post) => (
-                    <div className="postWrapper">
-                        <Post disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} post={post} />
+                    </div>}
+                {postsToShow.map((post, i) => (
+                    <div key={i} className="postWrapper">
+                        <Post
+                            username={this.state.username}
+                            disableScreen={this.state.disableScreen}
+                            changeScreenAbility={this.changeScreenAbility}
+                            post={post}
+                            getFeed={this.getFeed}
+                            profileMode={this.state.profileMode}
+                            getProfile={this.getProfile}
+                        />
                     </div>
                 ))}
             </div>
