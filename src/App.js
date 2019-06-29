@@ -7,8 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      username: ''
+      isLoggedIn: true,
+      username: 'noamtayri'
     };
   }
 
@@ -19,11 +19,15 @@ class App extends Component {
     })
   }
 
+  logout = () => {
+    this.setState({ isLoggedIn: false, username: '' })
+  }
+
   render() {
     return (
       <div className="App">
         {!this.state.isLoggedIn && <AuthenticationPage loginUser={this.loginUser} />}
-        {this.state.isLoggedIn && <MainPage username={this.state.username} />}
+        {this.state.isLoggedIn && <MainPage username={this.state.username} logout={this.logout} />}
       </div>
     );
   }

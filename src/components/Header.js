@@ -64,7 +64,7 @@ class Header extends Component {
                 <div key={'header'} className="Header">
                     <div className="navigate">
                         <div className="navigateButton" onClick={this.props.getFeed}>Home</div>
-                        <div className="navigateButton" onClick={() => this.props.getProfile(this.state.username)}>My Profile</div>
+                        <div className="navigateButton" onClick={() => this.props.getProfile(this.state.username)}>{this.state.username}</div>
                     </div>
                     <div className="search">
                         <form>
@@ -84,6 +84,9 @@ class Header extends Component {
                                     <Friend key={i} username={this.state.username} friend={friend} />
                                 ))}
                             </div>}
+                    </div>
+                    <div className="navigate" onClick={this.props.logout}>
+                        <div style={{ fontSize: '15px' }}>Logout</div>
                     </div>
                 </div>,
                 <div key={'placeholder'} className="headerPlaceholder" />

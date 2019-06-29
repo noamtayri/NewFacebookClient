@@ -109,7 +109,14 @@ class MainPage extends Component {
         return (
             <div className="mainPage">
                 <div className="headerWrapper">
-                    <Header username={this.state.username} disableScreen={this.state.disableScreen} changeScreenAbility={this.changeScreenAbility} getFeed={this.getFeed} getProfile={this.getProfile} />
+                    <Header
+                        username={this.state.username}
+                        disableScreen={this.state.disableScreen}
+                        changeScreenAbility={this.changeScreenAbility}
+                        getFeed={this.getFeed}
+                        getProfile={this.getProfile}
+                        logout={this.props.logout}
+                    />
                 </div>
                 {!this.state.profileMode &&
                     <div className="newPost">

@@ -27,7 +27,7 @@
     .navigate{
         color: white;
         display: flex;
-        :hover{
+        &:hover{
             cursor: pointer;
         }
         .navigateButton{
