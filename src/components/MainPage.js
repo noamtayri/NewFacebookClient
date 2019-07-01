@@ -12,6 +12,7 @@ class MainPage extends Component {
             disableScreen: false,
             newPost: '',
             isNewPostPublic: true,
+            newPostImages: [],
             feed: [],
             profileMode: false,
             profile: []
@@ -61,6 +62,27 @@ class MainPage extends Component {
             });
     }
 
+    uploadImages = (postId) => {
+        const uploadUrl = `images/upload.php?id=${postId}`;
+        const baseUrl = `http://localhost/newFacebook/`;
+        Object.keys(this.state.newPostImages).forEach(img => {
+            const formData = new FormData();
+            formData.append('image', this.state.newPostImages[img]); // must be 'image'!
+            axios({
+                url: uploadUrl,
+                baseURL: baseUrl,
+                method: 'POST',
+                data: formData,
+                headers: { 'content-type': 'multipart/form-data' }
+            }).then(res => res.data)
+                .then(data => {
+                    console.log(data.url);
+                    console.log(data.message);
+                });
+        });
+        this.getFeed();
+    }
+
     postPost = () => {
         if (this.state.newPost === '') {
             alert('Your Post is Empty');
@@ -81,7 +103,11 @@ class MainPage extends Component {
             .then(res => res.data)
             .then(data => {
                 this.setState({ newPost: '' })
-                this.getFeed();
+                if (this.state.newPostImages.length > 0) {
+                    this.uploadImages(data.post.id);
+                } else {
+                    this.getFeed();
+                }
 
             })
             .catch(e => {
@@ -126,6 +152,9 @@ class MainPage extends Component {
                             <button className="newPostButton" onClick={this.postPost}>Post</button>
                             <div className="newPostPermission">
                                 <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
+                            </div>
+                            <div className="newPostImages">
+                                <input type="file" multiple accept="image/jpeg" onChange={event => this.setState({ newPostImages: event.target.files })} />
                             </div>
                         </div>
                     </div>}
