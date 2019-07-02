@@ -3,6 +3,7 @@ import './MainPage.scss';
 import Header from './Header';
 import Post from './Post';
 import axios from 'axios';
+import { async } from 'q';
 
 class MainPage extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class MainPage extends Component {
             disableScreen: false,
             newPost: '',
             isNewPostPublic: true,
-            newPostImages: [],
+            newPostImages: {},
             feed: [],
             profileMode: false,
             profile: []
@@ -62,25 +63,18 @@ class MainPage extends Component {
             });
     }
 
-    uploadImages = (postId) => {
+    uploadImage = (postId, img) => {
         const uploadUrl = `images/upload.php?id=${postId}`;
         const baseUrl = `http://localhost/newFacebook/`;
-        Object.keys(this.state.newPostImages).forEach(img => {
-            const formData = new FormData();
-            formData.append('image', this.state.newPostImages[img]); // must be 'image'!
-            axios({
-                url: uploadUrl,
-                baseURL: baseUrl,
-                method: 'POST',
-                data: formData,
-                headers: { 'content-type': 'multipart/form-data' }
-            }).then(res => res.data)
-                .then(data => {
-                    console.log(data.url);
-                    console.log(data.message);
-                });
+        const formData = new FormData();
+        formData.append('image', img);
+        return axios({
+            url: uploadUrl,
+            baseURL: baseUrl,
+            method: 'POST',
+            data: formData,
+            headers: { 'content-type': 'multipart/form-data' }
         });
-        this.getFeed();
     }
 
     postPost = () => {
@@ -101,13 +95,16 @@ class MainPage extends Component {
             }
         })
             .then(res => res.data)
-            .then(data => {
+            .then(async (data) => {
                 this.setState({ newPost: '' })
                 if (this.state.newPostImages.length > 0) {
-                    this.uploadImages(data.post.id);
-                } else {
-                    this.getFeed();
+                    for (let i = 0; i < this.state.newPostImages.length; i++) {
+                        const x = await this.uploadImage(data.post.id, this.state.newPostImages[i]);
+                    }
                 }
+                this.setState({ newPostImages: {} })
+                this.fileInput.value = "";
+                this.getFeed();
 
             })
             .catch(e => {
@@ -154,7 +151,7 @@ class MainPage extends Component {
                                 <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
                             </div>
                             <div className="newPostImages">
-                                <input type="file" multiple accept="image/jpeg" onChange={event => this.setState({ newPostImages: event.target.files })} />
+                                <input type="file" multiple accept="image/jpeg" onChange={event => this.setState({ newPostImages: event.target.files })} ref={ref => this.fileInput = ref} />
                             </div>
                         </div>
                     </div>}

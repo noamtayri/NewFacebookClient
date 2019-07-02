@@ -61,7 +61,7 @@ class Friend extends Component {
     render() {
         return (
             <div className="friend">
-                <div className="friendName">
+                <div className="friendName" onClick={() => this.props.getProfile(this.props.friend)}>
                     {this.props.friend}
                 </div>
                 <div className="friendButtons">

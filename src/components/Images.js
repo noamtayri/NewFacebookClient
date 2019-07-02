@@ -8,9 +8,9 @@ class Images extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imgs: this.props.imgs,
             expand: null
         };
+        this.baseUrl = 'http://localhost/newFacebook/images/uploads/';
     }
 
     expandImg = (i) => {
@@ -28,7 +28,7 @@ class Images extends Component {
 
     swithcImg = (side) => {
         const expand = this.state.expand;
-        if ((side === 'right' && expand === this.state.imgs.length - 1) || (side === 'left' && expand === 0)) {
+        if ((side === 'right' && expand === this.props.imgs.length - 1) || (side === 'left' && expand === 0)) {
             return;
         }
         this.setState({ expand: side === 'right' ? expand + 1 : expand - 1 })
@@ -38,10 +38,10 @@ class Images extends Component {
         return (
             <div className="images">
                 {this.props.imgs.map((img, i) => (
-                    <div key={i} className="image" style={{ backgroundImage: `url(${img})` }} onClick={() => this.expandImg(i)} />
+                    <div key={i} className="image" style={{ backgroundImage: `url(${this.baseUrl}${img})` }} onClick={() => this.expandImg(i)} />
                 ))}
                 {this.state.expand !== null &&
-                    <div className="expandedImg" style={{ backgroundImage: `url(${this.state.imgs[this.state.expand]})` }} >
+                    <div className="expandedImg" style={{ backgroundImage: `url(${this.baseUrl}${this.props.imgs[this.state.expand]})` }} >
                         <div className="closeExpandWrapper">
                             <FaBackspace
                                 style={{ height: '30px', width: '30px', position: 'absolute', top: '6px', right: '6px', background: 'white', border: '3px solid black', padding: '2px' }}

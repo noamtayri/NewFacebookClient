@@ -81,7 +81,7 @@ class Header extends Component {
                         {this.state.search !== '' &&
                             <div className="friendsList">
                                 {this.friendsToShow().map((friend, i) => (
-                                    <Friend key={i} username={this.state.username} friend={friend} />
+                                    <Friend key={i} username={this.state.username} friend={friend} getProfile={this.props.getProfile} />
                                 ))}
                             </div>}
                     </div>

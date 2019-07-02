@@ -83,7 +83,7 @@ class Post extends Component {
                 <div className="content">
                     {this.props.post.content}
                 </div>
-                {JSON.parse(this.props.post.image) > 0 &&
+                {JSON.parse(this.props.post.image).length > 0 &&
                     <div className="imgWrapper">
                         <Images imgs={JSON.parse(this.props.post.image)} disableScreen={this.props.disableScreen} changeScreenAbility={this.props.changeScreenAbility} />
                     </div>}
