@@ -12,7 +12,7 @@ class Friend extends Component {
     }
 
     checkActualFriends = () => {
-        const loginUrl = `users/areFriends.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
+        const loginUrl = `users/details.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
         const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
@@ -21,7 +21,33 @@ class Friend extends Component {
         })
             .then(res => res.data)
             .then(data => {
-                this.setState({ actualFriends: data })
+                this.setState({ actualFriends: data.friends, invited: data.invited, inviting: data.inviting })
+            })
+            .catch((e) => {
+                if (e.response !== undefined
+                    && e.response.data !== undefined
+                    && e.response.data.message !== undefined) {
+                    alert(e.response.data.message);
+                }
+            });
+    }
+
+    changePlayStatus = () => {
+        const loginUrl = this.state.invited ?
+            `game/invite.php?reqUser=${this.props.friend}&resUser=${this.state.username}` :
+            `game/invite.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
+        const baseUrl = `http://localhost/newFacebook/`;
+        axios({
+            url: loginUrl,
+            baseURL: baseUrl,
+            method: 'GET',
+        })
+            .then(res => res.data)
+            .then(data => {
+                this.checkActualFriends();
+                if (!this.state.inviting) {
+                    window.open('http://localhost:5000/', '_blank');
+                }
             })
             .catch((e) => {
                 if (e.response !== undefined
@@ -58,6 +84,26 @@ class Friend extends Component {
         console.log('play');
     }
 
+    getPlayBtnClass = () => {
+        if (this.state.invited) {
+            return 'playButton';
+        } else if (this.state.inviting) {
+            return 'cancelButton';
+        } else {
+            return 'inviteButton';
+        }
+    }
+
+    getPlayBtnLabel = () => {
+        if (this.state.invited) {
+            return 'Play';
+        } else if (this.state.inviting) {
+            return 'Cancel';
+        } else {
+            return 'Invite';
+        }
+    }
+
     render() {
         return (
             <div className="friend">
@@ -68,7 +114,9 @@ class Friend extends Component {
                     <button className={this.state.actualFriends ? "removeFriendButton" : "addFriendButton"} onClick={this.changeFriendshipStatus}>
                         {this.state.actualFriends ? 'Remove Friend' : 'Add Friend'}
                     </button>
-                    <button className="playButton" onClick={this.play}>play</button>
+                    <button className={this.getPlayBtnClass()} onClick={this.changePlayStatus}>
+                        {this.getPlayBtnLabel()}
+                    </button>
                 </div>
             </div>
         );
