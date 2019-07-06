@@ -61,3 +61,13 @@
         grid-column-end: 3;
     }
 }
+
+@media (max-width: 800px) {
+    .mainPage{
+        display: flex;
+        flex-flow: column;
+        .newPost{
+            margin-bottom: 10px;
+        }
+    }
+}

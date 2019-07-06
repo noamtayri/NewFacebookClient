@@ -49,7 +49,7 @@ class Comments extends Component {
                 {this.props.comments.map((comment, i) => (
                     <div key={i} className="comment">
                         <div className="bubble">
-                            <div className="commentAuthor" onClick={() => this.props.getProfile(comment.author)}>
+                            <div className="commentAuthor" onClick={this.props.disableScreen ? {} : () => this.props.getProfile(comment.author)}>
                                 {comment.author}
                             </div>
                             <div className="commentContent">
@@ -63,7 +63,7 @@ class Comments extends Component {
                 ))}
                 <div className="newComment">
                     <textarea className="newCommentText" value={this.state.newComment} type="text" placeholder="Write a Comment..." name="newComment" required onChange={event => this.setState({ newComment: event.target.value })} />
-                    <button className="newPostButton" onClick={this.postComment}>Post</button>
+                    <button className="newPostButton" onClick={this.props.disableScreen ? {} : this.postComment}>Post</button>
                 </div>
             </div>
         );

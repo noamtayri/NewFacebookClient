@@ -39,3 +39,9 @@
   cursor: pointer;
   background-color: #5476b9;
 }
+
+@media (max-width: 800px) {
+  .Register{
+    width: 365px;
+  }
+}

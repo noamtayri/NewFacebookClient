@@ -146,7 +146,7 @@ class MainPage extends Component {
                         <div className="newPostHeader" >Create New Post</div>
                         <div className="newPostBody">
                             <textarea className="newPostText" value={this.state.newPost} type="text" placeholder="What are you thinking about?" name="newPost" required onChange={event => this.setState({ newPost: event.target.value })} />
-                            <button className="newPostButton" onClick={this.postPost}>Post</button>
+                            <button className="newPostButton" onClick={this.state.disableScreen ? {} : this.postPost}>Post</button>
                             <div className="newPostPermission">
                                 <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
                             </div>
