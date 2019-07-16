@@ -60,9 +60,9 @@ class Post extends Component {
         return (
             <div className="post">
                 <div className="author">
-                    <div onClick={this.props.disableScreen ? {} : () => this.props.getProfile(this.props.post.author)}>{this.props.post.author}</div>
+                    <div onClick={this.props.disableScreen ? () => {} : () => this.props.getProfile(this.props.post.author)}>{this.props.post.author}</div>
                     {this.props.post.author === this.state.username &&
-                        <div onClick={this.props.disableScreen ? {} : this.changePostPermission}>
+                        <div onClick={this.props.disableScreen ? () => {} : this.changePostPermission}>
                             {this.props.post.private ? <FaLock /> : <FaLockOpen />}
                         </div>}
                 </div>
@@ -83,7 +83,7 @@ class Post extends Component {
                     </div>
                     <div style={{ width: '99%', borderBottom: '1px solid #dddfe2' }} />
                     <div className="likeButton">
-                        <button className={this.props.post.meLike === true ? "pushed" : ""} onClick={this.props.disableScreen ? {} : this.likeClicked}>
+                        <button className={this.props.post.meLike === true ? "pushed" : ""} onClick={this.props.disableScreen ? () => {} : this.likeClicked}>
                             Like
                             <FaRegThumbsUp style={{ marginLeft: '4px' }} />
                         </button>

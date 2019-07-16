@@ -95,7 +95,7 @@ class MainPage extends Component {
                 this.setState({ newPost: '' })
                 if (this.state.newPostImages.length > 0) {
                     for (let i = 0; i < this.state.newPostImages.length; i++) {
-                        const x = await this.uploadImage(data.post.id, this.state.newPostImages[i]);
+                        await this.uploadImage(data.post.id, this.state.newPostImages[i]);
                     }
                 }
                 this.setState({ newPostImages: {} })
@@ -142,7 +142,7 @@ class MainPage extends Component {
                         <div className="newPostHeader" >Create New Post</div>
                         <div className="newPostBody">
                             <textarea className="newPostText" value={this.state.newPost} type="text" placeholder="What are you thinking about?" name="newPost" required onChange={event => this.setState({ newPost: event.target.value })} />
-                            <button className="newPostButton" onClick={this.state.disableScreen ? {} : this.postPost}>Post</button>
+                            <button className="newPostButton" onClick={this.state.disableScreen ? () => {} : this.postPost}>Post</button>
                             <div className="newPostPermission">
                                 <input type="checkbox" checked={this.state.isNewPostPublic} onChange={this.changePublic} />Public
                             </div>

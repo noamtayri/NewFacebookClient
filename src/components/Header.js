@@ -63,8 +63,8 @@ class Header extends Component {
             [
                 <div key={'header'} className="Header">
                     <div className="navigate">
-                        <div className="navigateButton" onClick={this.props.disableScreen ? {} : this.props.getFeed}>Home</div>
-                        <div className="navigateButton" onClick={this.props.disableScreen ? {} : () => this.props.getProfile(this.state.username)}>{this.state.username}</div>
+                        <div className="navigateButton" onClick={this.props.disableScreen ? () => {} : this.props.getFeed}>Home</div>
+                        <div className="navigateButton" onClick={this.props.disableScreen ? () => {} : () => this.props.getProfile(this.state.username)}>{this.state.username}</div>
                     </div>
                     <div className="search">
                         <form>
@@ -85,7 +85,7 @@ class Header extends Component {
                                 ))}
                             </div>}
                     </div>
-                    <div className="navigateLogOut" onClick={this.props.disableScreen ? {} : this.props.logout}>
+                    <div className="navigateLogOut" onClick={this.props.disableScreen ? () => {} : this.props.logout}>
                         <div>Logout</div>
                     </div>
                 </div>,
