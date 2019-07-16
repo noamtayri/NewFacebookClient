@@ -6,6 +6,7 @@ import Comments from './Comments';
 import axios from 'axios';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
+import { baseUrl } from '../utils/consts';
 
 class Post extends Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class Post extends Component {
 
     likeClicked = () => {
         const loginUrl = `posts/like.php?username=${this.state.username}&id=${this.props.post.id}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -38,7 +38,6 @@ class Post extends Component {
 
     changePostPermission = () => {
         const loginUrl = `posts/update.php?username=${this.state.username}&id=${this.props.post.id}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,

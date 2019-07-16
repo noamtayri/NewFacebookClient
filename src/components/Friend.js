@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Friend.scss';
 import axios from 'axios';
+import { baseUrl } from '../utils/consts';
 
 class Friend extends Component {
     constructor(props) {
@@ -13,7 +14,6 @@ class Friend extends Component {
 
     checkActualFriends = () => {
         const loginUrl = `users/details.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -36,7 +36,6 @@ class Friend extends Component {
         const loginUrl = this.state.invited ?
             `game/invite.php?reqUser=${this.props.friend}&resUser=${this.state.username}` :
             `game/invite.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -46,7 +45,7 @@ class Friend extends Component {
             .then(data => {
                 this.checkActualFriends();
                 if (!this.state.inviting) {
-                    window.open('http://localhost:5000/', '_blank');
+                    window.open(`http://localhost:5000/${this.state.username}`, '_blank');
                 }
             })
             .catch((e) => {
@@ -60,7 +59,6 @@ class Friend extends Component {
 
     changeFriendshipStatus = () => {
         const loginUrl = `users/request.php?reqUser=${this.state.username}&resUser=${this.props.friend}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -78,10 +76,6 @@ class Friend extends Component {
                     alert(e.response.data.message);
                 }
             });
-    }
-
-    play = () => {
-        console.log('play');
     }
 
     getPlayBtnClass = () => {

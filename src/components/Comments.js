@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Comments.scss';
 import axios from 'axios';
+import { baseUrl } from '../utils/consts';
 
 class Comments extends Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class Comments extends Component {
             return;
         }
         const loginUrl = `comments/create.php`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,

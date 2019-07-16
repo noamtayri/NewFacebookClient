@@ -3,7 +3,7 @@ import './MainPage.scss';
 import Header from './Header';
 import Post from './Post';
 import axios from 'axios';
-import { async } from 'q';
+import { baseUrl } from '../utils/consts';
 
 class MainPage extends Component {
     constructor(props) {
@@ -23,7 +23,6 @@ class MainPage extends Component {
 
     getProfile = (profileToShow) => {
         const loginUrl = `posts/profile.php?reqUser=${this.state.username}&resUser=${profileToShow}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -44,7 +43,6 @@ class MainPage extends Component {
 
     getFeed = () => {
         const loginUrl = `posts/feed.php?username=${this.state.username}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,
@@ -65,7 +63,6 @@ class MainPage extends Component {
 
     uploadImage = (postId, img) => {
         const uploadUrl = `images/upload.php?id=${postId}`;
-        const baseUrl = `http://localhost/newFacebook/`;
         const formData = new FormData();
         formData.append('image', img);
         return axios({
@@ -83,7 +80,6 @@ class MainPage extends Component {
             return;
         }
         const loginUrl = `posts/create.php`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,

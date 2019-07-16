@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Register.scss';
 import axios from 'axios';
+import { baseUrl } from '../../../utils/consts';
 
 class Register extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class Register extends Component {
       return;
     }
     const loginUrl = `users/signup.php`;
-    const baseUrl = `http://localhost/newFacebook/`;
     axios({
       url: loginUrl,
       baseURL: baseUrl,

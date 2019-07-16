@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Header.scss';
 import Friend from './Friend';
 import axios from 'axios';
+import { baseUrl } from '../utils/consts';
 
 class Header extends Component {
     constructor(props) {
@@ -16,7 +17,6 @@ class Header extends Component {
 
     getAllFriends = () => {
         const loginUrl = `users/search.php?username=`;
-        const baseUrl = `http://localhost/newFacebook/`;
         axios({
             url: loginUrl,
             baseURL: baseUrl,

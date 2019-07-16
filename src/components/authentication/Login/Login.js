@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.scss';
 import axios from 'axios';
+import { baseUrl } from '../../../utils/consts';
 
 class Login extends Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class Login extends Component {
 
   login = () => {
     const loginUrl = `users/login.php?username=${this.state.username}&password=${this.state.password}`;
-    const baseUrl = `http://localhost/newFacebook/`;
     axios({
       url: loginUrl,
       baseURL: baseUrl,
